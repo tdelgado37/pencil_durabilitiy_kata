@@ -16,9 +16,10 @@ class pencil_durability_functional_tests(unittest.TestCase):
     def test_paper_is_created(self):
         self.assertIsInstance(self.paper, Paper)
 
-    def test_pencil_get_user_input(self):
-        user_input = "hello world"
-        self.assertEqual(self.pencil.text_to_write, user_input)
+    def test_pencil_set_text_to_write(self):
+        str_text_to_write = "hello world"
+        self.pencil.set_text_to_write(str_text_to_write)
+        self.assertEqual(self.pencil.text_to_write, str_text_to_write)
 
 
 if __name__ == '__main__':
