@@ -12,16 +12,14 @@ class pencil_durability_functional_tests(unittest.TestCase):
         del self.pencil
         del self.paper
 
+
+
     #As a writer
     #I want to be able to use a pencil to write text on a sheet of paper
     #so that I can better remember my thoughts
     def test_pencil_writes_string_of_text_on_sheet_of_paper(self):
         self.pencil.write_on_paper(self.paper)
         self.assertEqual(self.paper.text ,self.text_to_display)
-
-
-
-
 
 
     #As a pencil manufacturer
@@ -33,17 +31,22 @@ class pencil_durability_functional_tests(unittest.TestCase):
         after_writing_letter_until_dull = self.pencil.letters_until_dull
         self.assertTrue(before_writing_letter_until_dull > after_writing_letter_until_dull)
 
-#As a writer
-#I want to be able to sharpen my pencil
-#so that I can continue to write with it after it goes pencil_durability_functional_tests
+    #As a writer
+    #I want to be able to sharpen my pencil
+    #so that I can continue to write with it after it goes pencil_durability_functional_tests
+    def test_pencil_sharpener(self):
+        self.pencil.letters_until_dull = 0
+        self.pencil.sharpen()
+        self.assertTrue(self.pencil.letters_until_dull > 0)
 
-#As a writer
-#I want to be able to erase previouly written text
-#so that I can remove my mistakes
 
-#As a pencil manufacturer
-#I want a pencil eraser to eventually wear out
-#so that I can sell more pencils
+    #As a writer
+    #I want to be able to erase previouly written text
+    #so that I can remove my mistakes
+
+    #As a pencil manufacturer
+    #I want a pencil eraser to eventually wear out
+    #so that I can sell more pencils
 
 
 if __name__ == '__main__':

@@ -44,6 +44,11 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.pencil.write_on_paper(self.paper)
         self.assertEqual(self.pencil.letters_until_dull, pencil_letters_until_dull_before - 2)
 
+    def test_pencil_sharpener_sharpens_to_inital_sharpen_value(self):
+        inital_sharpen_value = self.pencil.letters_until_dull
+        self.pencil.letters_until_dull = 0
+        self.pencil.sharpen()
+        self.assertEqual(inital_sharpen_value, self.pencil.letters_until_dull)
 
 
 

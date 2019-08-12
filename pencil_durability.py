@@ -6,6 +6,8 @@ class Pencil:
     #I picked 10 as an arbitrary number
     letters_until_dull = 10
 
+    _inital_sharpen_value = 10
+
     def write_on_paper(self,paper):
         str_to_write_on_paper = ''
         for character in self.text_to_write:
@@ -24,6 +26,9 @@ class Pencil:
 
     def set_text_to_write(self, str):
         self.text_to_write = str
+
+    def sharpen(self):
+        self.letters_until_dull = self._inital_sharpen_value
 
 
 class Paper:
