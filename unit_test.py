@@ -17,36 +17,32 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.assertIsInstance(self.paper, Paper)
 
     def test_pencil_set_text_to_write(self):
-        str_text_to_write = "hello world"
-        self.pencil.set_text_to_write(str_text_to_write)
-        self.assertEqual(self.pencil.text_to_write, str_text_to_write)
+        self.pencil.set_text_to_write("hello world")
+        self.assertEqual(self.pencil.text_to_write, "hello world")
 
-    def test_get_letters_until_dull(self):
-        self.assertEqual(self.pencil.letters_until_dull, 10)
 
     def test_white_space_does_not_dull_pencil(self):
-        str_text_to_write = " "
-        self.pencil.set_text_to_write(str_text_to_write)
+        pencil_letters_until_dull_before = self.pencil.letters_until_dull
+        self.pencil.set_text_to_write(" ")
         self.pencil.write_on_paper(self.paper)
-        self.assertEqual(self.pencil.letters_until_dull, 10)
+        self.assertEqual(self.pencil.letters_until_dull, pencil_letters_until_dull_before)
 
     def test_writing_after_pencil_is_dull_will_write_white_space(self):
-        str_text_to_write = "hello world!"
-        self.pencil.set_text_to_write(str_text_to_write)
+        self.pencil.set_text_to_write("hello world!")
         self.pencil.write_on_paper(self.paper)
         self.assertEqual(self.paper.text, "hello world ")
 
     def test_newline_does_not_dull_pencil(self):
-        str_text_to_write = '\n'
-        self.pencil.set_text_to_write(str_text_to_write)
+        pencil_letters_until_dull_before = self.pencil.letters_until_dull
+        self.pencil.set_text_to_write('\n')
         self.pencil.write_on_paper(self.paper)
-        self.assertEqual(self.pencil.letters_until_dull, 10)
+        self.assertEqual(self.pencil.letters_until_dull, pencil_letters_until_dull_before)
 
     def test_writing_upper_case_letter_takes_two_points_off_dull(self):
-        str_text_to_write = 'H'
-        self.pencil.set_text_to_write(str_text_to_write)
+        pencil_letters_until_dull_before = self.pencil.letters_until_dull
+        self.pencil.set_text_to_write('H')
         self.pencil.write_on_paper(self.paper)
-        self.assertEqual(self.pencil.letters_until_dull, 8)
+        self.assertEqual(self.pencil.letters_until_dull, pencil_letters_until_dull_before - 2)
 
 
 
