@@ -43,7 +43,10 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #As a writer
     #I want to be able to erase previouly written text
     #so that I can remove my mistakes
-
+    def test_pencil_eraser(self):
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper, 'Hello')
+        self.assertEqual(self.paper.text, '     ')
     #As a pencil manufacturer
     #I want a pencil eraser to eventually wear out
     #so that I can sell more pencils
