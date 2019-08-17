@@ -74,5 +74,12 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.pencil.erase(self.paper,'hi')
         self.assertEqual(self.paper.text, 'hi   ll')
 
+    def test_pencil_eraser_when_eraser_status_is_zero(self):
+        self.pencil.eraser_status = 3
+        self.pencil.set_text_to_write('Bill')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'Bill')
+        self.assertEqual(self.paper.text, 'B   ')
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

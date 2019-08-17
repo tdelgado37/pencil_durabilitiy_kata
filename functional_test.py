@@ -47,9 +47,15 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.pencil.write_on_paper(self.paper)
         self.pencil.erase(self.paper, 'Hello')
         self.assertEqual(self.paper.text, '     ')
+
     #As a pencil manufacturer
     #I want a pencil eraser to eventually wear out
     #so that I can sell more pencils
+    def test_pencil_eraser_degradation(self):
+        eraser_status_before_erase = self.pencil.eraser_status
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper, 'Hello')
+        self.assertTrue(eraser_status_before_erase > self.pencil.eraser_status)
 
 
 if __name__ == '__main__':
