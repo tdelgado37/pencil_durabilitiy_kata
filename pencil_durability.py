@@ -33,25 +33,25 @@ class Pencil:
         self.letters_until_dull = self._inital_sharpen_value
 
     def erase(self, paper, erase_str):
-        empty_string = ''
+        replacement_string = ''
         str_has_been_erased = False
         new_text_on_paper = ''
         for character in reversed(erase_str):
             if self.eraser_status > 0:
-                empty_string = ' ' + empty_string
+                replacement_string = ' ' + replacement_string
                 self.eraser_status -= 1
             else:
-                empty_string = character + empty_string
+                replacement_string = character + replacement_string
         for word_on_paper in reversed(paper.text.split()):
             #adding a space before each word is added to new word
             #because we are going in reverse order
             if len(new_text_on_paper) > 0:
                 new_text_on_paper = ' ' + new_text_on_paper
             if word_on_paper == erase_str and not str_has_been_erased:
-                word_on_paper = empty_string
+                word_on_paper = replacement_string
                 str_has_been_erased = True
             elif not str_has_been_erased:
-                partially_erased_word = word_on_paper.replace(erase_str, empty_string)
+                partially_erased_word = word_on_paper.replace(erase_str, replacement_string)
                 if(partially_erased_word != word_on_paper):
                     word_on_paper = partially_erased_word
                     str_has_been_erased = True
