@@ -117,10 +117,5 @@ class pencil_durability_unit_tests(unittest.TestCase):
         self.assertEqual(self.paper.text, 'Bi  ')
 
 
-    def test_single_character_erase_logic(self):
-        method_return = self.pencil._single_character_erase_logic('hi', 'h')
-        self.assertEqual(method_return, ' i')
-
-
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
