@@ -1,7 +1,7 @@
 import unittest
 from pencil_durability import Pencil, Paper
 
-class pencil_durability_functional_tests(unittest.TestCase):
+class pencil_durability_unit_tests(unittest.TestCase):
     def setUp(self):
         self.pencil = Pencil()
         self.paper = Paper()
@@ -80,6 +80,47 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.pencil.write_on_paper(self.paper)
         self.pencil.erase(self.paper,'Bill')
         self.assertEqual(self.paper.text, 'B   ')
+
+    def test_erased_position(self):
+        self.pencil.set_text_to_write('hi hi')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'hi')
+        self.assertEqual(self.pencil.erased_position, 3)
+
+    def test_erased_position_erase_first_word(self):
+        self.pencil.set_text_to_write('hi hello')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'hi')
+        self.assertEqual(self.pencil.erased_position, 0)
+
+    def test_pencil_erased_position_erase_middle_word(self):
+        self.pencil.set_text_to_write('a hi hello')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'hi')
+        self.assertEqual(self.pencil.erased_position, 2)
+
+    def test_erased_position_partial_word_erased(self):
+        self.pencil.eraser_status = 3
+        self.pencil.set_text_to_write('Bill')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'ill')
+        self.assertEqual(self.pencil.erased_position, 1)
+        self.assertEqual(self.paper.text, 'B   ')
+
+
+    def test_erased_position_when_eraser_runs_out(self):
+        self.pencil.eraser_status = 2
+        self.pencil.set_text_to_write('Bill')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper,'Bill')
+        self.assertEqual(self.pencil.erased_position, 2)
+        self.assertEqual(self.paper.text, 'Bi  ')
+
+
+    def test_single_character_erase_logic(self):
+        method_return = self.pencil._single_character_erase_logic('hi', 'h')
+        self.assertEqual(method_return, ' i')
+
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

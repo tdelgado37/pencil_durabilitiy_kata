@@ -57,6 +57,16 @@ class pencil_durability_functional_tests(unittest.TestCase):
         self.pencil.erase(self.paper, 'Hello')
         self.assertTrue(eraser_status_before_erase > self.pencil.eraser_status)
 
+    #As a writer
+    #I want to be able to edit previously written text
+    #so that I can change my writing without starting over
+    def test_editing(self):
+        self.text_to_display='hello hi'
+        self.pencil.set_text_to_write(self.text_to_display)
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper, 'hello')
+        self.pencil.edit_text(self.paper, 'gosh')
+        self.assertEqual(self.paper.text, 'gosh  hi')
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
