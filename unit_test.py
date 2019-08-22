@@ -116,6 +116,12 @@ class pencil_durability_unit_tests(unittest.TestCase):
         self.assertEqual(self.pencil.erased_position, 2)
         self.assertEqual(self.paper.text, 'Bi  ')
 
+    def test_text_editing_override_previous_text(self):
+        self.pencil.set_text_to_write('hi he')
+        self.pencil.write_on_paper(self.paper)
+        self.pencil.erase(self.paper, 'hi')
+        self.pencil.edit_text(self.paper,'hello')
+        self.assertEqual(self.paper.text, 'hel@@')
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

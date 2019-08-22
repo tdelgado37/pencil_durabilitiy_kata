@@ -72,12 +72,21 @@ class Pencil:
 
         paper.text = new_text_on_paper
 
-    
+
 
     def edit_text(self, paper, editing_text):
         str_before_edited_text = paper.text[0:self.erased_position]
+        str_to_be_edited = paper.text[self.erased_position:]
         str_after_edited_text = paper.text[self.erased_position + len(editing_text):]
-        paper.text = str_before_edited_text + editing_text + str_after_edited_text
+        new_text_on_paper = ''
+        for index, character in enumerate(editing_text):
+            editable_char  = str_to_be_edited[index]
+            if editable_char.isspace():
+                editable_char = character
+            else:
+                editable_char = '@'
+            new_text_on_paper += editable_char
+        paper.text = str_before_edited_text + new_text_on_paper + str_after_edited_text
 
 
 
