@@ -12,6 +12,9 @@ class Pencil:
 
     erased_position = 0
 
+    def set_text_to_write(self, str):
+        self.text_to_write = str
+
     def write_on_paper(self,paper):
         str_to_write_on_paper = ''
         for character in self.text_to_write:
@@ -28,19 +31,18 @@ class Pencil:
         paper.text = str_to_write_on_paper
 
 
-    def set_text_to_write(self, str):
-        self.text_to_write = str
 
     def sharpen(self):
         self.letters_until_dull = self._inital_sharpen_value
 
     def erase(self, paper, erase_str):
         self.erased_position = 0
-        replacement_string = ''
-        str_has_been_erased = False
-        new_text_on_paper = ''
-        eraser_position_padding =0
 
+        new_text_on_paper = self._new_text_on_paper_erase_logic(paper.text.split(),erase_str)
+        paper.text = new_text_on_paper
+
+    def _create_replacement_string(self, erase_str):
+        replacement_string = ''
         for character in reversed(erase_str):
             if self.eraser_status > 0:
                 replacement_string = ' ' + replacement_string
@@ -48,7 +50,14 @@ class Pencil:
                 self.erased_position -= 1
             else:
                 replacement_string = character + replacement_string
-        for word_on_paper in reversed(paper.text.split()):
+        return replacement_string
+
+    def _new_text_on_paper_erase_logic(self, paper_text_array, erase_str):
+        replacement_string = self._create_replacement_string(erase_str)
+        str_has_been_erased = False
+        new_text_on_paper = ''
+
+        for word_on_paper in reversed(paper_text_array):
             #adding a space before each word is added to new word
             #because we are going in reverse order
             if len(new_text_on_paper) > 0:
@@ -66,18 +75,20 @@ class Pencil:
             new_text_on_paper = word_on_paper + new_text_on_paper
             if not str_has_been_erased:
                 self.erased_position -= len(new_text_on_paper)
-
-
         self.erased_position += len(new_text_on_paper)
-
-        paper.text = new_text_on_paper
-
-
+        return new_text_on_paper
 
     def edit_text(self, paper, editing_text):
+
         str_before_edited_text = paper.text[0:self.erased_position]
         str_to_be_edited = paper.text[self.erased_position:]
         str_after_edited_text = paper.text[self.erased_position + len(editing_text):]
+
+        new_text_on_paper = self._text_editing_override_logic(str_to_be_edited, editing_text)
+        paper.text = str_before_edited_text + new_text_on_paper + str_after_edited_text
+
+
+    def _text_editing_override_logic(self,str_to_be_edited, editing_text):
         new_text_on_paper = ''
         for index, character in enumerate(editing_text):
             editable_char  = str_to_be_edited[index]
@@ -86,10 +97,7 @@ class Pencil:
             else:
                 editable_char = '@'
             new_text_on_paper += editable_char
-        paper.text = str_before_edited_text + new_text_on_paper + str_after_edited_text
-
-
-
+        return new_text_on_paper
 
 
 class Paper:
