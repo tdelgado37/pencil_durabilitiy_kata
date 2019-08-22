@@ -1,34 +1,41 @@
 
 
 class Pencil:
-    text_to_write = ''
-
     #I picked 10 as an arbitrary number
     letters_until_dull = 10
 
     eraser_status = 10
-
+    
     _inital_sharpen_value = 10
+    white_space_list = [' ', '\n']
 
     erased_position = 0
 
-    def set_text_to_write(self, str):
-        self.text_to_write = str
-
-    def write_on_paper(self,paper):
+    def write_on_paper(self,paper, text_to_write):
         str_to_write_on_paper = ''
-        for character in self.text_to_write:
-            if self.letters_until_dull > 0 and character != ' ' and character != '\n':
-                if character.isupper():
-                    self.letters_until_dull -=2
-                else:
-                    self.letters_until_dull -=1
-            elif self.letters_until_dull <= 0 and character != ' ' and character != '\n':
+
+        for character in text_to_write:
+            not_dull_pencil = self.letters_until_dull > 0
+            if not_dull_pencil:
+                self._pencil_point_degradation_logic(character)
+            else:
                 character = ' '
 
             str_to_write_on_paper += character
 
         paper.text = str_to_write_on_paper
+
+
+    def _pencil_point_degradation_logic(self, character):
+        if not self._is_white_space(character):
+            if character.isupper():
+                self.letters_until_dull -=2
+            else:
+                self.letters_until_dull -=1
+
+    def _is_white_space(self, character):
+        return character in self.white_space_list
+
 
 
 
@@ -44,7 +51,8 @@ class Pencil:
     def _create_replacement_string(self, erase_str):
         replacement_string = ''
         for character in reversed(erase_str):
-            if self.eraser_status > 0:
+            eraser_still_works = self.eraser_status > 0
+            if eraser_still_works:
                 replacement_string = ' ' + replacement_string
                 self.eraser_status -= 1
                 self.erased_position -= 1
@@ -52,12 +60,12 @@ class Pencil:
                 replacement_string = character + replacement_string
         return replacement_string
 
-    def _new_text_on_paper_erase_logic(self, paper_text_array, erase_str):
+    def _new_text_on_paper_erase_logic(self, paper_text_list, erase_str):
         replacement_string = self._create_replacement_string(erase_str)
         str_has_been_erased = False
         new_text_on_paper = ''
 
-        for word_on_paper in reversed(paper_text_array):
+        for word_on_paper in reversed(paper_text_list):
             #adding a space before each word is added to new word
             #because we are going in reverse order
             if len(new_text_on_paper) > 0:

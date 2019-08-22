@@ -5,8 +5,6 @@ class pencil_durability_functional_tests(unittest.TestCase):
     def setUp(self):
         self.pencil = Pencil()
         self.paper = Paper()
-        self.text_to_display='Hello'
-        self.pencil.set_text_to_write(self.text_to_display)
 
     def tearDown(self):
         del self.pencil
@@ -18,8 +16,8 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #I want to be able to use a pencil to write text on a sheet of paper
     #so that I can better remember my thoughts
     def test_pencil_writes_string_of_text_on_sheet_of_paper(self):
-        self.pencil.write_on_paper(self.paper)
-        self.assertEqual(self.paper.text ,self.text_to_display)
+        self.pencil.write_on_paper(self.paper, 'hi')
+        self.assertEqual(self.paper.text ,'hi')
 
 
     #As a pencil manufacturer
@@ -27,7 +25,7 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #so that I can sell more pencils
     def test_pencil_dulling_from_writing(self):
         before_writing_letter_until_dull = self.pencil.letters_until_dull
-        self.pencil.write_on_paper(self.paper)
+        self.pencil.write_on_paper(self.paper, 'hello')
         after_writing_letter_until_dull = self.pencil.letters_until_dull
         self.assertTrue(before_writing_letter_until_dull > after_writing_letter_until_dull)
 
@@ -44,7 +42,7 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #I want to be able to erase previouly written text
     #so that I can remove my mistakes
     def test_pencil_eraser(self):
-        self.pencil.write_on_paper(self.paper)
+        self.pencil.write_on_paper(self.paper, 'Hello')
         self.pencil.erase(self.paper, 'Hello')
         self.assertEqual(self.paper.text, '     ')
 
@@ -53,7 +51,7 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #so that I can sell more pencils
     def test_pencil_eraser_degradation(self):
         eraser_status_before_erase = self.pencil.eraser_status
-        self.pencil.write_on_paper(self.paper)
+        self.pencil.write_on_paper(self.paper, 'Hello')
         self.pencil.erase(self.paper, 'Hello')
         self.assertTrue(eraser_status_before_erase > self.pencil.eraser_status)
 
@@ -61,9 +59,7 @@ class pencil_durability_functional_tests(unittest.TestCase):
     #I want to be able to edit previously written text
     #so that I can change my writing without starting over
     def test_editing(self):
-        self.text_to_display='hello hi'
-        self.pencil.set_text_to_write(self.text_to_display)
-        self.pencil.write_on_paper(self.paper)
+        self.pencil.write_on_paper(self.paper, 'hello hi')
         self.pencil.erase(self.paper, 'hello')
         self.pencil.edit_text(self.paper, 'gosh')
         self.assertEqual(self.paper.text, 'gosh  hi')
