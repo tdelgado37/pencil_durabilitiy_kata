@@ -3,7 +3,7 @@ prerequisites:
 
 For Windows:
 	1. Please open powershell or any other application you may have to run bash scripts
-	2. Run following commands:
+	2. Run following commands to run the tests:
 	
 		git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
 		cd pencil_durabilitiy_kata;
@@ -12,7 +12,7 @@ For Windows:
 
 For linux/Mac:
 	1. Open your terminal
-	2. Run following commands:
+	2. Run following commands to run the tests:
 	
 		git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
 		cd pencil_durabilitiy_kata;
