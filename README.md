@@ -2,18 +2,21 @@ prerequisites:
 	1. Have Python 3.7 installed
 
 For Windows:
-	+ Please open powershell or any other application you may have to run bash scripts
-	+ Run following commands:
-		1. git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
-		2. cd pencil_durabilitiy_kata;
-		3. ./build.sh
+	1. Please open powershell or any other application you may have to run bash scripts
+	2. Run following commands:
+	
+		git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
+		cd pencil_durabilitiy_kata;
+		./build.sh;
+		
 
 For linux/Mac:
-	+ Open your terminal
-	+ Run following commands:
-		1. git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
-		2. cd pencil_durabilitiy_kata;
-		3. ./build.sh
+	1. Open your terminal
+	2. Run following commands:
+	
+		git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
+		cd pencil_durabilitiy_kata;
+		./build.sh;
 
 
 Original Kata ReadMe below for reference:
