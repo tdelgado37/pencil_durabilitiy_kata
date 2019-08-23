@@ -1,13 +1,11 @@
-
+import constants
 
 class Pencil:
     #I picked 10 as an arbitrary number
     letters_until_dull = 10
 
     eraser_status = 10
-    
-    _inital_sharpen_value = 10
-    white_space_list = [' ', '\n']
+
 
     erased_position = 0
 
@@ -34,19 +32,53 @@ class Pencil:
                 self.letters_until_dull -=1
 
     def _is_white_space(self, character):
-        return character in self.white_space_list
-
-
-
+        return character in constants.WHITE_SPACE_LIST
 
     def sharpen(self):
-        self.letters_until_dull = self._inital_sharpen_value
+        self.letters_until_dull = constants.INITAL_SHARPEN_VALUE
 
     def erase(self, paper, erase_str):
         self.erased_position = 0
 
         new_text_on_paper = self._new_text_on_paper_erase_logic(paper.text.split(),erase_str)
         paper.text = new_text_on_paper
+
+
+    def _new_text_on_paper_erase_logic(self, paper_text_list, erase_str):
+        replacement_string = self._create_replacement_string(erase_str)
+        str_has_been_erased = False
+        new_text_on_paper = ''
+
+        for word_on_paper in reversed(paper_text_list):
+
+            new_text_on_paper_has_words = len(new_text_on_paper) > 0
+            if new_text_on_paper_has_words:
+                new_text_on_paper = ' ' + new_text_on_paper
+                if not str_has_been_erased:
+                    space_padding = -1
+                    self._adjust_erased_position(space_padding)
+
+            if not str_has_been_erased:
+                word_on_paper_matches_erase_str = word_on_paper == erase_str
+                if word_on_paper_matches_erase_str:
+                    word_on_paper = replacement_string
+                    str_has_been_erased = True
+                else:
+                    partially_erased_word = word_on_paper.replace(erase_str, replacement_string)
+                    part_of_word_has_been_erased = partially_erased_word != word_on_paper
+
+                    if part_of_word_has_been_erased:
+                        word_on_paper = partially_erased_word
+                        str_has_been_erased = True
+
+            new_text_on_paper = word_on_paper + new_text_on_paper
+
+            added_to_new_text_and_str_still_not_erased = not str_has_been_erased
+            if added_to_new_text_and_str_still_not_erased:
+                self._adjust_erased_position(-len(new_text_on_paper))
+
+        self._adjust_erased_position(len(new_text_on_paper))
+        return new_text_on_paper
 
     def _create_replacement_string(self, erase_str):
         replacement_string = ''
@@ -60,31 +92,8 @@ class Pencil:
                 replacement_string = character + replacement_string
         return replacement_string
 
-    def _new_text_on_paper_erase_logic(self, paper_text_list, erase_str):
-        replacement_string = self._create_replacement_string(erase_str)
-        str_has_been_erased = False
-        new_text_on_paper = ''
-
-        for word_on_paper in reversed(paper_text_list):
-            #adding a space before each word is added to new word
-            #because we are going in reverse order
-            if len(new_text_on_paper) > 0:
-                new_text_on_paper = ' ' + new_text_on_paper
-                if not str_has_been_erased:
-                    self.erased_position -= 1
-            if word_on_paper == erase_str and not str_has_been_erased:
-                word_on_paper = replacement_string
-                str_has_been_erased = True
-            elif not str_has_been_erased:
-                partially_erased_word = word_on_paper.replace(erase_str, replacement_string)
-                if(partially_erased_word != word_on_paper):
-                    word_on_paper = partially_erased_word
-                    str_has_been_erased = True
-            new_text_on_paper = word_on_paper + new_text_on_paper
-            if not str_has_been_erased:
-                self.erased_position -= len(new_text_on_paper)
-        self.erased_position += len(new_text_on_paper)
-        return new_text_on_paper
+    def _adjust_erased_position(self, integer):
+        self.erased_position += integer
 
     def edit_text(self, paper, editing_text):
 
@@ -100,7 +109,9 @@ class Pencil:
         new_text_on_paper = ''
         for index, character in enumerate(editing_text):
             editable_char  = str_to_be_edited[index]
-            if editable_char.isspace():
+            white_space = self._is_white_space(editable_char)
+
+            if white_space:
                 editable_char = character
             else:
                 editable_char = '@'
