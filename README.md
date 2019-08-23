@@ -1,3 +1,22 @@
+prerequisites:
+	1. Have Python 3.7 installed
+
+For Windows:
+	1. Please open powershell or any other application you may have to run bash scripts
+	2. Run following commands:
+		     git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
+				 cd pencil_durabilitiy_kata;
+				 ./build.sh
+
+For linux/Mac:
+	1. Open your terminal
+	2. Run following commands:
+		     git clone https://github.com/tdelgado37/pencil_durabilitiy_kata.git;
+				 cd pencil_durabilitiy_kata;
+				 ./build.sh
+
+
+Original Kata ReadMe below for reference:
 # Pencil Durability Kata
 The purpose of the Pencil Durability Kata is to write code to simulate, first coarsely and then more faithfully, an ordinary graphite pencil. It includes writing and editing text, point degradation, using the eraser, and sharpening the pencil. The point of this kata is to provide a larger-than-trivial exercise that can be used to practice TDD. A significant portion of the effort will be in determining which tests should be written and, more importantly, written next.
 
