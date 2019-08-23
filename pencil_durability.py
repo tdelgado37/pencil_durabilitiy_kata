@@ -1,13 +1,10 @@
 import constants
 
 class Pencil:
-    #I picked 10 as an arbitrary number
-    letters_until_dull = 10
-
-    eraser_status = 10
-
-
-    erased_position = 0
+    def __init__(self):
+        self.letters_until_dull = constants.INITIAL_SHARPEN_VALUE
+        self.eraser_status = constants.INITIAL_ERASER_VALUE
+        self.erased_position = 0
 
     def write_on_paper(self,paper, text_to_write):
         str_to_write_on_paper = ''
@@ -35,7 +32,7 @@ class Pencil:
         return character in constants.WHITE_SPACE_LIST
 
     def sharpen(self):
-        self.letters_until_dull = constants.INITAL_SHARPEN_VALUE
+        self.letters_until_dull = constants.INITIAL_SHARPEN_VALUE
 
     def erase(self, paper, erase_str):
         self.erased_position = 0
